@@ -2,13 +2,7 @@ import { Fragment, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Dialog, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import {
-  SidebarIcon,
-  SidebarDesktopIcon,
-  CloseSidebarIcon,
-  ArrowSidebarIcon,
-} from "../assets";
-import { SortByMenu } from "../components";
+import { SortByMenu, icons } from "../components";
 
 const initialNavigationArray = [
   {
@@ -104,10 +98,7 @@ export function NavBar() {
                       onClick={() => setSidebarOpen(false)}
                     >
                       <span className="sr-only">Close sidebar</span>
-                      <img
-                        className="h-6 w-6 text-white"
-                        src={CloseSidebarIcon}
-                      />
+                      <icons.CloseSidebarIcon className="h-6 w-6 text-white" />
                     </button>
                   </div>
                   <nav className="flex flex-1 flex-col">
@@ -124,8 +115,7 @@ export function NavBar() {
                               )}
                             >
                               {item.name}
-                              <img
-                                src={ArrowSidebarIcon}
+                              <icons.ArrowSidebarIcon
                                 className={twMerge(
                                   "h-6 w-6 shrink-0 transform lg:-rotate-90",
                                   item.current ? "rotate-180 lg:rotate-90" : ""
@@ -171,8 +161,7 @@ export function NavBar() {
                               }
                             >
                               {subitem}
-                              <img
-                                src={ArrowSidebarIcon}
+                              <icons.ArrowSidebarIcon
                                 className={
                                   "h-6 w-6 shrink-0 transform lg:-rotate-90"
                                 }
@@ -197,8 +186,8 @@ export function NavBar() {
             className="-m-2.5 p-2.5 text-gray-700"
             onClick={() => setSidebarOpen(true)}
           >
-            <img className="h-10 w-10 lg:hidden" src={SidebarIcon} />
-            <img className="h-6 w-6 hidden lg:block" src={SidebarDesktopIcon} />
+            <icons.SidebarIcon className="h-10 w-10 lg:hidden" />
+            <icons.SidebarDesktopIcon className="h-6 w-6 hidden lg:block" />
           </button>
 
           <div className="flex flex-1 items-center justify-between self-stretch lg:gap-x-6">
