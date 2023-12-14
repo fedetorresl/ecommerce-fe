@@ -107,9 +107,9 @@ export function NavBar() {
                             <button
                               onClick={() => handleItemClick(item.name)}
                               className={twMerge(
-                                "w-full flex justify-between gap-x-3 lg:p-2 text-complementary-orange-600 leading-6 font-semibold transition-all duration-300 lg:outline-none lg:hover:outline-2 lg:hover:outline-complementary-orange-100 lg:rounded-full",
+                                "w-full flex justify-between gap-x-3 lg:p-2 text-orange-600 leading-6 font-semibold transition-all duration-300 lg:outline-none lg:hover:outline-2 lg:hover:outline-orange-100 lg:rounded-full",
                                 item.current &&
-                                  "lg:outline lg:outline-2 lg:outline-complementary-orange-100 lg:rounded-full"
+                                  "lg:outline-2 lg:outline-orange-100 lg:rounded-full"
                               )}
                             >
                               {item.name}
@@ -124,7 +124,7 @@ export function NavBar() {
                           <ul
                             className={twMerge(
                               "w-full h-fit flex flex-col gap-y-4 text-xs transition-all duration-300 lg:hidden",
-                              item.current ? "" : "hidden"
+                              !item.current && "hidden"
                             )}
                           >
                             {item.subitems.map((subitem) => (
@@ -151,19 +151,15 @@ export function NavBar() {
                         {item.subitems.map((subitem) => (
                           <li
                             key={subitem}
-                            className="lg:pl-3 text-complementary-orange-600 text-xs leading-6 font-semibold"
+                            className="lg:pl-3 text-orange-600 text-xs leading-6 font-semibold"
                           >
                             <button
                               className={
-                                "w-full group flex justify-between gap-x-3 lg:p-2 text-complementary-orange-600 leading-6 font-semibold transition-all duration-300"
+                                "w-full group flex justify-between gap-x-3 lg:p-2 text-orange-600 leading-6 font-semibold transition-all duration-300"
                               }
                             >
                               {subitem}
-                              <icons.ArrowSidebarIcon
-                                className={
-                                  "h-6 w-6 shrink-0 transform lg:-rotate-90"
-                                }
-                              />
+                              <icons.ArrowSidebarIcon className="h-6 w-6 shrink-0 transform lg:-rotate-90" />
                             </button>
                           </li>
                         ))}

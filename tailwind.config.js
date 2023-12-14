@@ -7,11 +7,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        'complementary-orange': {
-          100: '#FFEDD5',
-          500: '#F97316',
-          600: '#EA580C'
-        },
         'techie-gray': {
           50: '#FCFCFC',
           100: '#E7E8EB',
