@@ -46,22 +46,22 @@ export const SortByMenu = () => {
         <Popover.Panel className="absolute right-0 mt-5 flex">
           <div className="flex-auto overflow-hidden rounded-md bg-white text-sm leading-6 shadow-lg ring-1 ring-techie-gray-300/5">
             <div className="space-y-3 p-4">
-              {options.map((item) => (
+              {options.map((option) => (
                 <div
-                  key={item.name}
+                  key={option.name}
                   className="relative flex items-center gap-x-6 rounded-lg hover:bg-gray-50"
                 >
-                  {item.icon && (
+                  {option.icon && (
                     <div className="flex h-5 w-5 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                      <item.icon
+                      <option.icon
                         className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
                         aria-hidden="true"
                       />
                     </div>
                   )}
                   <div className="w-max">
-                    <a href={item.href} className="text-gray-900 w-auto">
-                      {item.name}
+                    <a href={option.href} className="text-gray-900 w-auto">
+                      {option.name}
                       <span className="absolute inset-0" />
                     </a>
                   </div>

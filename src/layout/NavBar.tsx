@@ -4,7 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { SortByMenu, icons } from "../components";
 
-const initialNavigationArray = [
+const initialNavbarOptions = [
   {
     name: "New In",
     href: "#",
@@ -50,9 +50,7 @@ const initialNavigationArray = [
 ];
 
 export function NavBar() {
-  const [navigationArray, setNavigationArray] = useState(
-    initialNavigationArray
-  );
+  const [navigationArray, setNavigationArray] = useState(initialNavbarOptions);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleItemClick = (name: string) => {
@@ -152,7 +150,7 @@ export function NavBar() {
                       <ul className="flex flex-1 flex-col gap-y-3">
                         {item.subitems.map((subitem) => (
                           <li
-                            key={subitem + "desktop"}
+                            key={subitem}
                             className="lg:pl-3 text-complementary-orange-600 text-xs leading-6 font-semibold"
                           >
                             <button
