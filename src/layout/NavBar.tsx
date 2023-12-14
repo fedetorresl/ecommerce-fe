@@ -4,17 +4,15 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { SortByMenu, icons } from "../components";
 
-const initialNavbarOptions = [
+const navbarOptions = [
   {
     name: "New In",
     href: "#",
-    current: false,
     subitems: ["New In 1", "New In 2"],
   },
   {
     name: "Clothing",
     href: "#",
-    current: false,
     subitems: [
       "New In",
       "See all",
@@ -32,33 +30,26 @@ const initialNavbarOptions = [
   {
     name: "Footwear",
     href: "#",
-    current: false,
     subitems: ["Footwear 1", "Footwear 2"],
   },
   {
     name: "Accessories",
     href: "#",
-    current: false,
     subitems: ["Accessories 1", "Accessories 2"],
   },
   {
     name: "SALE",
     href: "#",
-    current: false,
     subitems: ["SALE 1", "SALE 2"],
   },
 ];
 
 export function NavBar() {
-  const [navigationArray, setNavigationArray] = useState(initialNavbarOptions);
+  const [selectedTab, setSelectedTab] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleItemClick = (name: string) => {
-    const updatedNavigation = navigationArray.map((item) => ({
-      ...item,
-      current: !item.current && item.name === name,
-    }));
-    setNavigationArray(updatedNavigation);
+    setSelectedTab(selectedTab === name ? null : name);
   };
 
   return (
@@ -101,22 +92,23 @@ export function NavBar() {
                   </div>
                   <nav className="flex flex-1 flex-col">
                     <ul className="flex flex-1 flex-col gap-y-7 lg:gap-y-3 text-xs">
-                      {navigationArray.map((item) => (
-                        <Fragment key={item.name}>
+                      {navbarOptions.map((option) => (
+                        <Fragment key={option.name}>
                           <li>
                             <button
-                              onClick={() => handleItemClick(item.name)}
+                              onClick={() => handleItemClick(option.name)}
                               className={twMerge(
                                 "w-full flex justify-between gap-x-3 lg:p-2 text-orange-600 leading-6 font-semibold transition-all duration-300 lg:outline-none lg:hover:outline-2 lg:hover:outline-orange-100 lg:rounded-full",
-                                item.current &&
+                                option.name === selectedTab &&
                                   "lg:outline-2 lg:outline-orange-100 lg:rounded-full"
                               )}
                             >
-                              {item.name}
+                              {option.name}
                               <icons.ArrowSidebarIcon
                                 className={twMerge(
                                   "h-6 w-6 shrink-0 transform lg:-rotate-90",
-                                  item.current ? "rotate-180 lg:rotate-90" : ""
+                                  option.name === selectedTab &&
+                                    "rotate-180 lg:rotate-90"
                                 )}
                               />
                             </button>
@@ -124,10 +116,10 @@ export function NavBar() {
                           <ul
                             className={twMerge(
                               "w-full h-fit flex flex-col gap-y-4 text-xs transition-all duration-300 lg:hidden",
-                              !item.current && "hidden"
+                              option.name !== selectedTab && "hidden"
                             )}
                           >
-                            {item.subitems.map((subitem) => (
+                            {option.subitems.map((subitem) => (
                               <li key={subitem} className="lg:pl-3">
                                 {subitem}
                               </li>
@@ -138,17 +130,17 @@ export function NavBar() {
                     </ul>
                   </nav>
                 </div>
-                {navigationArray.map((item) => (
+                {navbarOptions.map((option) => (
                   <div
-                    key={item.name}
+                    key={option.name}
                     className={twMerge(
                       "grow flex-col gap-y-3 overflow-y-auto bg-white px-6 pb-4 pt-[5.25rem] max-w-[270px] hidden",
-                      item.current && "lg:flex"
+                      option.name === selectedTab && "lg:flex"
                     )}
                   >
                     <nav className="flex flex-1 flex-col">
                       <ul className="flex flex-1 flex-col gap-y-3">
-                        {item.subitems.map((subitem) => (
+                        {option.subitems.map((subitem) => (
                           <li
                             key={subitem}
                             className="lg:pl-3 text-orange-600 text-xs leading-6 font-semibold"
