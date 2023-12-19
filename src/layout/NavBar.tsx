@@ -93,6 +93,7 @@ export function NavBar() {
                     <ul className="flex flex-1 flex-col gap-y-7 lg:gap-y-3 text-xs">
                       {navbarOptions.map((option) => (
                         <NavBarOption
+                          key={option.name}
                           option={option}
                           selectedTab={selectedTab}
                           handleItemClick={handleItemClick}
@@ -102,7 +103,11 @@ export function NavBar() {
                   </nav>
                 </div>
                 {navbarOptions.map((option) => (
-                  <NavbarSubmenu option={option} selectedTab={selectedTab} />
+                  <NavbarSubmenu
+                    key={option.name}
+                    option={option}
+                    selectedTab={selectedTab}
+                  />
                 ))}
               </Dialog.Panel>
             </Transition.Child>

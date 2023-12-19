@@ -15,7 +15,6 @@ export const icons = {
       focusable="false"
       data-prefix="far"
       data-icon="arrow-alt-circle-up"
-      role="img"
       className={twMerge("h-11 w-11", className)}
       {...props}
     >
@@ -48,7 +47,6 @@ export const icons = {
       focusable="false"
       data-prefix="far"
       data-icon="arrow-alt-circle-up"
-      role="img"
       fill="none"
       className={twMerge("h-11 w-11", className)}
       {...props}
@@ -91,7 +89,6 @@ export const icons = {
       focusable="false"
       data-prefix="far"
       data-icon="arrow-alt-circle-up"
-      role="img"
       className={twMerge("h-5 w-5 ", className)}
       {...props}
     >
@@ -120,7 +117,6 @@ export const icons = {
       focusable="false"
       data-prefix="far"
       data-icon="arrow-alt-circle-up"
-      role="img"
       className={twMerge("h-5 w-5 ", className)}
       {...props}
     >
@@ -144,7 +140,6 @@ export const icons = {
       focusable="false"
       data-prefix="far"
       data-icon="arrow-alt-circle-up"
-      role="img"
       className={twMerge("h-11 w-11 ", className)}
       {...props}
     >
@@ -172,12 +167,11 @@ export const icons = {
       focusable="false"
       data-prefix="far"
       data-icon="arrow-alt-circle-up"
-      role="img"
       fill="none"
       className={twMerge("h-11 w-11 ", className)}
-      {...props}
       strokeWidth="1.5"
       stroke="#ABAEB7"
+      {...props}
     >
       <path
         strokeLinecap="round"
@@ -195,7 +189,6 @@ export const icons = {
       focusable="false"
       data-prefix="far"
       data-icon="arrow-alt-circle-up"
-      role="img"
       className={twMerge("h-4 w-4 ", className)}
       {...props}
     >
