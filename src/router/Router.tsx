@@ -3,6 +3,7 @@ import type { Location } from "react-router-dom";
 
 import { ROUTES } from "./routes";
 import { Layout } from "../layout";
+import { FlyoutMenu } from "../components";
 
 export const Router = () => {
   const location = useLocation();
@@ -14,7 +15,7 @@ export const Router = () => {
     <div>
       <Routes location={previousLocation ?? location}>
         <Route element={<Layout />}>
-          <Route element={<div>test</div>} path={ROUTES.base} />
+          <Route element={<div>Test</div>} path={ROUTES.base} />
         </Route>
       </Routes>
     </div>
