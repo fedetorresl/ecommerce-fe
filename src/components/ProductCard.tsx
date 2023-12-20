@@ -18,7 +18,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
         {product.description}
       </div>
       <div className="pt-4 w-full flex justify-between">
-        <p className="text-techie-gray-600 text-base font-normal font-['Manrope']">
+        <p className="text-techie-gray-600 text-base font-normal font-manrope">
           € {product.price}
         </p>
         <icons.ProductHeartIcon className="h-6 w-6" />

@@ -1,5 +1,4 @@
 import { getApi } from "./axios";
-import { generateQueryKey } from "./config/config";
 
 export interface ProductsResponse {
   products: Product[];
@@ -23,7 +22,7 @@ export interface Product {
 }
 
 export const getProductsQuery = () => ({
-  queryKey: generateQueryKey("getProductsQuery", { domain: "product" }),
+  queryKey: ["getProductsQuery", { domain: "product" }],
   queryFn: async () => {
     const response = await getApi().get<ProductsResponse>("/products");
     return response.data;
