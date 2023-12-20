@@ -1,28 +1,56 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Product, getProductsQuery } from "../api/products";
-import { errorToast } from "../utils";
 import { ProductCard, icons } from "../components";
 
 export function Main() {
-  const queryParam = {
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    status,
+    error,
+  } = useInfiniteQuery({
     ...getProductsQuery(),
-    onError: errorToast,
-  };
-  const { data: products, error, isLoading } = useQuery(queryParam);
+    getNextPageParam: (lastPage) => {
+      if (lastPage.skip < lastPage.total) return lastPage.skip + lastPage.limit;
+      return null;
+    },
+  });
 
-  if (isLoading) return <icons.SpinnerIcon className="w-32 h-32" />;
-
-  if (error) return "An error has occurred: " + error.message;
+  if (status === "pending")
+    return (
+      <div className="flex justify-center w-full h-screen items-center">
+        <icons.SpinnerIcon className="w-32 h-32" />
+      </div>
+    );
+  if (status === "error") return "An error has occurred: " + error.message;
 
   return (
     <div className="bg-white">
-      <div className="mx-auto md:max-w-2xl px-20 py-2 sm:px-6 sm:py-6 lg:max-w-6xl lg:px-16">
+      <div className="mx-auto md:max-w-2xl px-20 py-5 sm:px-6 sm:py-6 lg:max-w-6xl lg:px-16 flex flex-col items-center gap-10">
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-          {products?.products.map((product: Product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {data.pages.map((page) =>
+            page.products.map((product: Product) => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          )}
         </div>
+        {hasNextPage ? (
+          <button
+            className="w-32 h-11 px-6 py-3 bg-orange-600 rounded-full justify-center items-center gap-2 inline-flex font-manrope text-white hover:bg-techie-gray-300"
+            onClick={() => fetchNextPage()}
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            Load More
+          </button>
+        ) : (
+          "Nothing more to load"
+        )}
       </div>
+      {isFetchingNextPage && (
+        <icons.SpinnerIcon className="position fixed z-50 w-20 h-20 bottom-2 right-0" />
+      )}
     </div>
   );
 }
