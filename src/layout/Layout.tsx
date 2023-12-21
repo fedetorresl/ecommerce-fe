@@ -7,7 +7,7 @@ export const Layout = () => {
   return (
     <section className="flex h-auto w-full flex-col scroll-smooth">
       <NavBar />
-      <main className="grow overflow-hidden pt-32">{outlet}</main>
+      <main className="grow overflow-hidden pt-15">{outlet}</main>
     </section>
   );
 };
