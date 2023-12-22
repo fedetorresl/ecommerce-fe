@@ -8,8 +8,9 @@ export function Main() {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    status,
+    isLoading,
     error,
+    isError,
   } = useInfiniteQuery({
     ...getProductsQuery(),
     getNextPageParam: (lastPage) => {
@@ -18,19 +19,20 @@ export function Main() {
     },
   });
 
-  if (status === "pending")
+  if (isLoading)
     return (
       <div className="flex justify-center w-full h-screen items-center">
         <icons.SpinnerIcon className="w-32 h-32" />
       </div>
     );
-  if (status === "error") return "An error has occurred: " + error.message;
+
+  if (isError) return "An error has occurred: " + error.message;
 
   return (
     <div className="bg-white">
       <div className="mx-auto md:max-w-2xl px-20 py-5 sm:px-6 sm:py-6 lg:max-w-6xl lg:px-16 flex flex-col items-center gap-10">
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-          {data.pages.map((page) =>
+          {data?.pages.map((page) =>
             page.products.map((product: Product) => (
               <ProductCard key={product.id} product={product} />
             ))

@@ -15,7 +15,7 @@ export interface Product {
   thumbnail: string;
 }
 
-export const attributes = "id,title,description,price,thumbnail";
+const attributes = "id,title,description,price,thumbnail";
 
 export const getProductsQuery = () => ({
   queryKey: ["getProductsQuery"],
