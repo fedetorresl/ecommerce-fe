@@ -222,7 +222,7 @@ export const icons = {
   ),
 
   SpinnerIcon: ({ className, ...props }: SVGProps) => (
-    <div className="flex justify-center w-full h-screen items-center">
+    <>
       <svg
         aria-hidden="true"
         className={twMerge(
@@ -244,7 +244,7 @@ export const icons = {
         />
       </svg>
       <span className="sr-only">Loading...</span>
-    </div>
+    </>
   ),
 };
 

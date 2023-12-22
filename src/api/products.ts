@@ -12,19 +12,18 @@ export interface Product {
   title: string;
   description: string;
   price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand: string;
-  category: string;
   thumbnail: string;
-  images: string[];
 }
 
+const attributes = "id,title,description,price,thumbnail";
+
 export const getProductsQuery = () => ({
-  queryKey: ["getProductsQuery", { domain: "product" }],
-  queryFn: async () => {
-    const response = await getApi().get<ProductsResponse>("/products");
+  queryKey: ["getProductsQuery"],
+  queryFn: async ({ pageParam = 1 }) => {
+    const response = await getApi().get<ProductsResponse>(
+      `/products?limit=6&skip=${pageParam}&select=${attributes}`
+    );
     return response.data;
   },
+  initialPageParam: 0,
 });
