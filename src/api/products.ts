@@ -17,12 +17,17 @@ export interface Product {
 
 const attributes = "id,title,description,price,thumbnail";
 
-export const getProductsQuery = () => ({
-  queryKey: ["getProductsQuery"],
+export const getProductsQuery = (searchTerm?: string) => ({
+  queryKey: ["getProductsQuery", searchTerm],
   queryFn: async ({ pageParam = 1 }) => {
-    const response = await getApi().get<ProductsResponse>(
-      `/products?limit=6&skip=${pageParam}&select=${attributes}`
-    );
+    const query = searchTerm
+      ? `/products/search?q=${encodeURIComponent(
+          searchTerm
+        )}&limit=6&skip=${pageParam}&select=${attributes}`
+      : `/products?limit=6&skip=${pageParam}&select=${attributes}`;
+
+    const response = await getApi().get<ProductsResponse>(query);
+
     return response.data;
   },
   initialPageParam: 0,

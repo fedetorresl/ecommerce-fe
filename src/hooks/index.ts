@@ -1,2 +1,1 @@
-export * from "./useDebouncedQuery";
-export * from "./usePermissions";
+export * from "./useDebounce";

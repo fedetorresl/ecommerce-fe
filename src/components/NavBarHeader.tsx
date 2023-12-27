@@ -1,11 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { SortByMenu, icons } from "../components";
+import { useDebounce } from "../hooks";
 
 export const NavBarHeader = ({
   setSidebarOpen,
 }: {
   setSidebarOpen: (isOpened: boolean) => void;
 }) => {
+  const navigate = useNavigate();
+
+  const { handleSearch } = useDebounce((term: string) => {
+    const url = `?search=${encodeURIComponent(term)}`;
+    navigate(url, { replace: true });
+  });
+
   return (
     <div className="flex flex-col items-center pt-10 lg:pt-3 px-5 gap-4">
       <div className="sticky top-0 z-40 flex w-full h-16 shrink-0 items-center bg-white sm:gap-x-6">
@@ -29,15 +38,16 @@ export const NavBarHeader = ({
             action="#"
             method="GET"
           >
-            <label htmlFor="search-field" className="sr-only">
+            <label htmlFor="search" className="sr-only">
               Search
             </label>
             <input
-              id="search-field"
+              id="search"
               className="block h-full placeholder:text-techie-gray-300 focus:ring-0 text-sm outline-none  w-11/12"
               placeholder="Search..."
               type="search"
               name="search"
+              onChange={(e) => handleSearch(e.target.value)}
             />
             <MagnifyingGlassIcon
               className="pointer-events-none h-5 w-5 text-gray-400"
@@ -52,15 +62,16 @@ export const NavBarHeader = ({
         action="#"
         method="GET"
       >
-        <label htmlFor="search-field" className="sr-only">
+        <label htmlFor="search" className="sr-only">
           Search
         </label>
         <input
-          id="search-field"
+          id="search"
           className="block h-7 text-gray-900 placeholder:text-gray-400 text-sm outline-none w-11/12"
           placeholder="Search..."
           type="search"
           name="search"
+          onChange={(e) => handleSearch(e.target.value)}
         />
         <MagnifyingGlassIcon
           className="pointer-events-none h-5 w-5 text-gray-400"
