@@ -1,37 +1,19 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { SortByMenu, icons } from "../components";
-import { useDebouncedQuery } from "~/hooks";
+import { useDebounce } from "../hooks";
 
 export const NavBarHeader = ({
   setSidebarOpen,
 }: {
   setSidebarOpen: (isOpened: boolean) => void;
 }) => {
-  const [timer, setTimer] = useState<number | null>(null);
   const navigate = useNavigate();
 
-  const debounce = (func: Function) => {
-    return function (this: any, ...args: any[]) {
-      const context = this;
-      if (timer) clearTimeout(timer);
-      const localTimer = setTimeout(() => {
-        setTimer(null);
-        func.apply(context, args);
-      }, 1000);
-      setTimer(localTimer);
-    };
-  };
-
-  const delayedSearch = debounce((term: string) => {
+  const { handleSearch } = useDebounce((term: string) => {
     const url = `?search=${encodeURIComponent(term)}`;
     navigate(url, { replace: true });
   });
-
-  const handleSearch = (term: string) => {
-    delayedSearch(term);
-  };
 
   return (
     <div className="flex flex-col items-center pt-10 lg:pt-3 px-5 gap-4">

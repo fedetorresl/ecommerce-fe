@@ -1,1 +1,1 @@
-export * from "./useDebouncedQuery";
+export * from "./useDebounce";
