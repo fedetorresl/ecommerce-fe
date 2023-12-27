@@ -6,7 +6,7 @@ import { ProductCard, icons } from "../components";
 export function Main() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const searchTerm = searchParams.get("search") || "";
+  const searchTerm = searchParams.get("search") ?? "";
 
   const {
     data,
