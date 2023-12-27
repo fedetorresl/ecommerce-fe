@@ -1,8 +1,13 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
 import { Product, getProductsQuery } from "../api/products";
 import { ProductCard, icons } from "../components";
 
 export function Main() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchTerm = searchParams.get("search") || "";
+
   const {
     data,
     hasNextPage,
@@ -12,9 +17,10 @@ export function Main() {
     error,
     isError,
   } = useInfiniteQuery({
-    ...getProductsQuery(),
+    ...getProductsQuery(searchTerm),
     getNextPageParam: (lastPage) => {
-      if (lastPage.skip < lastPage.total) return lastPage.skip + lastPage.limit;
+      if (lastPage.skip + lastPage.limit < lastPage.total)
+        return lastPage.skip + lastPage.limit;
       return null;
     },
   });

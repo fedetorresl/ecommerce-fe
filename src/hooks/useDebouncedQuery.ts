@@ -11,7 +11,7 @@ export interface UseDebouncedQueryOptions {
 
 export const useDebouncedQuery = (
   params: UseDebouncedQueryOptions,
-  debounce = 300,
+  debounce = 300
 ) => {
   const [debouncedParams, setDebouncedParams] = useState(params);
   const [loading, setLoading] = useState(false);
