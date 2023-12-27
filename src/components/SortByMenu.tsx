@@ -5,20 +5,20 @@ import { icons } from "./common";
 const options = [
   {
     name: "My Favorites",
-    href: "#",
+    key: "favorites",
     icon: icons.HeartIcon,
   },
   {
     name: "Price - from high to low",
-    href: "#",
+    key: "price-desc",
   },
   {
     name: "Price - from low to high",
-    href: "#",
+    key: "price-asc",
   },
   {
     name: "Alphabetical order",
-    href: "#",
+    key: "alphabetical",
   },
 ];
 
@@ -60,7 +60,10 @@ export const SortByMenu = () => {
                     </div>
                   )}
                   <div className="w-max">
-                    <a href={option.href} className="text-gray-900 w-auto">
+                    <a
+                      href={`?sort=${option.key}`}
+                      className="text-gray-900 w-auto"
+                    >
                       {option.name}
                       <span className="absolute inset-0" />
                     </a>
