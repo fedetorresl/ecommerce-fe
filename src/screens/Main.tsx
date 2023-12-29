@@ -2,6 +2,8 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useLocation, useParams } from "react-router-dom";
 import { Product, getProductsQuery } from "../api/products";
 import { ProductCard, icons } from "../components";
+import { useFavorites } from "../hooks/useFavorites";
+import { useFavoritesStore } from "../stores";
 
 export function Main() {
   const location = useLocation();
@@ -20,7 +22,10 @@ export function Main() {
   } = useInfiniteQuery({
     ...getProductsQuery(searchTerm),
     getNextPageParam: (lastPage) => {
-      if (lastPage.skip + lastPage.limit < lastPage.total)
+      if (
+        lastPage.skip + lastPage.limit < lastPage.total &&
+        sortByParam !== "favorites"
+      )
         return lastPage.skip + lastPage.limit;
       return null;
     },
@@ -35,9 +40,9 @@ export function Main() {
       sortedData.sort((a, b) => a.price - b.price);
     } else if (sortByParam === "price-desc") {
       sortedData.sort((a, b) => b.price - a.price);
-    } //else (sortByParam === "favorites") {
-
-    // }
+    } else if (sortByParam === "favorites") {
+      sortedData = useFavoritesStore.getState().favorites;
+    }
   }
 
   if (isLoading)
@@ -61,7 +66,7 @@ export function Main() {
           <button
             className="w-32 h-11 px-6 py-3 bg-orange-600 rounded-full justify-center items-center gap-2 inline-flex font-manrope text-white hover:bg-techie-gray-300"
             onClick={() => fetchNextPage()}
-            disabled={!hasNextPage || isFetchingNextPage}
+            disabled={isFetchingNextPage}
           >
             Load More
           </button>
