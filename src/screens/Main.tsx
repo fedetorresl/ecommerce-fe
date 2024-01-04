@@ -1,12 +1,15 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { Product, getProductsQuery } from "../api/products";
 import { ProductCard, icons } from "../components";
+import { useFavorites } from "../hooks/useFavorites";
+import { useFavoritesStore } from "../stores";
 
 export function Main() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchTerm = searchParams.get("search") ?? "";
+  const sortByParam = searchParams.get("sort") ?? "";
 
   const {
     data,
@@ -19,11 +22,28 @@ export function Main() {
   } = useInfiniteQuery({
     ...getProductsQuery(searchTerm),
     getNextPageParam: (lastPage) => {
-      if (lastPage.skip + lastPage.limit < lastPage.total)
+      if (
+        lastPage.skip + lastPage.limit < lastPage.total &&
+        sortByParam !== "favorites"
+      )
         return lastPage.skip + lastPage.limit;
       return null;
     },
   });
+
+  let sortedData = data ? [...data.pages.flatMap((page) => page.products)] : [];
+
+  if (sortByParam) {
+    if (sortByParam === "alphabetical") {
+      sortedData.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortByParam === "price-asc") {
+      sortedData.sort((a, b) => a.price - b.price);
+    } else if (sortByParam === "price-desc") {
+      sortedData.sort((a, b) => b.price - a.price);
+    } else if (sortByParam === "favorites") {
+      sortedData = useFavoritesStore.getState().favorites;
+    }
+  }
 
   if (isLoading)
     return (
@@ -38,17 +58,15 @@ export function Main() {
     <div className="bg-white">
       <div className="mx-auto md:max-w-2xl px-20 py-5 sm:px-6 sm:py-6 lg:max-w-6xl lg:px-16 flex flex-col items-center gap-10">
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-          {data?.pages.map((page) =>
-            page.products.map((product: Product) => (
-              <ProductCard key={product.id} product={product} />
-            ))
-          )}
+          {sortedData.map((product: Product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
         {hasNextPage ? (
           <button
             className="w-32 h-11 px-6 py-3 bg-orange-600 rounded-full justify-center items-center gap-2 inline-flex font-manrope text-white hover:bg-techie-gray-300"
             onClick={() => fetchNextPage()}
-            disabled={!hasNextPage || isFetchingNextPage}
+            disabled={isFetchingNextPage}
           >
             Load More
           </button>
